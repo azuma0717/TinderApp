@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "328122337726",
+    "firebase_url": "https://fir-swipecard.firebaseio.com",
+    "project_id": "fir-swipecard",
+    "storage_bucket": "fir-swipecard.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:328122337726:android:ed6dc303962793dc",
+        "android_client_info": {
+          "package_name": "com.gmail.yuki.swipe_cards_1215"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "328122337726-gu146u7n6bh9sgooumejt99b66jff74j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAUHd0-m9mz9hkYizj-YA7GGouy5u-CYw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
