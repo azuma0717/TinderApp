@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20sp">
+
+        <ImageView
+            android:background="@mipmap/ic_launcher"
+            android:id="@+id/ChatImage"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginRight="8dp" />
+
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="0dp"
+            android:layout_height="46dp"
+            android:layout_weight="1"
+            android:background="@drawable/frame_style"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="4sp"
+            android:padding="8dp"
+            android:textColor="@android:color/black"
+            android:textSize="14sp" />
+
+        <!-- marginLeft="-6dp"することで角丸のTextViewに`◆`を重ねている。 -->
+        <View
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="-3dp"
+            android:background="@drawable/frame_style"
+            android:rotation="45" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

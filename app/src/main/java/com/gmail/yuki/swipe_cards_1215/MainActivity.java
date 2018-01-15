@@ -31,7 +31,7 @@ public class MainActivity extends Activity {
 
     //↓自作アダプター
     private com.gmail.yuki.swipe_cards_1215.Cards.arrayAdapter arrayAdapter;
-    Button bt1, bt2,bt3;
+    Button bt1, bt2, bt3;
     FirebaseAuth mAuth;
 
     private String userSex;
@@ -193,11 +193,15 @@ public class MainActivity extends Activity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
 
+                    String key = FirebaseDatabase.getInstance().getReference().child("Chat").push().getKey();
+
                     //dataSnapshot.getKey()でカードに出ている人のユーザーIDを取得。その配下にconnectionsとmatchesを作成する。
-                    usersDb.child(dataSnapshot.getKey()).child("connections").child("matches").child(currentUID).setValue(true);
+//                    usersDb.child(dataSnapshot.getKey()).child("connections").child("matches").child(currentUID).setValue(true);
+                    usersDb.child(dataSnapshot.getKey()).child("connections").child("matches").child(currentUID).child("ChatId").setValue(key);
 
                     //こっちは、自分のところにマッチした人を格納する。dataSnapshot.getKey()はカードに出ている人のユーザーID
-                    usersDb.child(currentUID).child("connections").child("matches").child(dataSnapshot.getKey()).setValue(true);
+//                    usersDb.child(currentUID).child("connections").child("matches").child(dataSnapshot.getKey()).setValue(true);
+                    usersDb.child(currentUID).child("connections").child("matches").child(dataSnapshot.getKey()).child("ChatId").setValue(key);
 
                     Toast.makeText(getApplicationContext(), "New Conections", Toast.LENGTH_SHORT).show();
 
@@ -268,24 +272,27 @@ public class MainActivity extends Activity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
-                //dataが存在した場合かつ、すでにyepかnopeで、振り分けられてない場合に発動。
-                if (dataSnapshot.exists() && !dataSnapshot.child("connections").child("yep").hasChild(currentUID) && !dataSnapshot.child("connections").child("nope").hasChild(currentUID) && dataSnapshot.child("sex").getValue().equals(oppositeUserSex)) {
+                if (dataSnapshot.child("sex").getValue() != null) {
 
-                    //基本はデフォルトを入れとく
-                    String profileImageUrl = "default";
+                    //dataが存在した場合かつ、すでにyepかnopeで、振り分けられてない場合に発動。
+                    if (dataSnapshot.exists() && !dataSnapshot.child("connections").child("yep").hasChild(currentUID) && !dataSnapshot.child("connections").child("nope").hasChild(currentUID) && dataSnapshot.child("sex").getValue().equals(oppositeUserSex)) {
 
-                    //もし、プロフィールイメージURLがデフォルトじゃなかったら、画像のURLを取得して格納する。
-                    if (!dataSnapshot.child("profileImageUrl").getValue().equals("default")) {
+                        //基本はデフォルトを入れとく
+                        String profileImageUrl = "default";
 
-                        profileImageUrl = dataSnapshot.child("profileImageUrl").getValue().toString();
+                        //もし、プロフィールイメージURLがデフォルトじゃなかったら、画像のURLを取得して格納する。
+                        if (!dataSnapshot.child("profileImageUrl").getValue().equals("default")) {
 
+                            profileImageUrl = dataSnapshot.child("profileImageUrl").getValue().toString();
+
+                        }
+
+                        //ここで、DBから情報を引っ張ってきてる.ユーザID,名前、プロフィール画像のURLを引き渡してる
+                        cards item = new cards(dataSnapshot.getKey(), dataSnapshot.child("name").getValue().toString(), profileImageUrl);
+
+                        rowItems.add(item);
+                        arrayAdapter.notifyDataSetChanged();
                     }
-
-                    //ここで、DBから情報を引っ張ってきてる.ユーザID,名前、プロフィール画像のURLを引き渡してる
-                    cards item = new cards(dataSnapshot.getKey(), dataSnapshot.child("name").getValue().toString(), profileImageUrl);
-
-                    rowItems.add(item);
-                    arrayAdapter.notifyDataSetChanged();
                 }
             }
 
